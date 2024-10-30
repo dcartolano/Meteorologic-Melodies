@@ -1,4 +1,4 @@
-const searchSpotify = async (query) => {
+const getPlaylists = async (query) => {
     try {
         
         // console.log(import.meta.env);
@@ -23,5 +23,5 @@ const searchSpotify = async (query) => {
     }
   };
   
-  export { searchSpotify };
+  export { getPlaylists };
   
