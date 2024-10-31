@@ -1,1 +1,1 @@
-select zipcode from locations
+select zipcode from locations;
