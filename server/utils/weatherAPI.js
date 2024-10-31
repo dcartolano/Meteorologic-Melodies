@@ -40,4 +40,4 @@ const getWeatherConditions = async (lat, lon) => {
     }
 };
 
-export { getLatLon, getWeatherConditions };
+module.exports = { getLatLon, getWeatherConditions };

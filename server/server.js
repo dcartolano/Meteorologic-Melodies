@@ -1,4 +1,4 @@
-import "dotenv/config"
+require("dotenv").config(); 
 const weatherAPI = require('./utils/weatherAPI');
 
 const express = require('express');
@@ -9,33 +9,34 @@ const { Pool } = require('pg');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Connect to database
+// const pool = new Pool(
+//   {
+//     // TODO: Enter PostgreSQL username
+//     user: 'postgres',
+//     // TODO: Enter PostgreSQL password
+//     password: 'password',
+//     host: 'localhost',
+//     database: 'mmsearch_db'
+//   },
+//   console.log(`Connected to the movies_db database.`)
+// )
+
+// pool.connect();
+
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/api/weather', async (req, res) => {
   try {
-      const weatherData = await weatherAPI.getLatLon(); // Assuming you have a function to fetch data
+      const weatherData = await weatherAPI.getLatLon('60004'); // Assuming you have a function to fetch data
+      console.log(weatherData);
       res.json(weatherData);
   } catch (error) {
       res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 });
-
-// Connect to database
-const pool = new Pool(
-  {
-    // TODO: Enter PostgreSQL username
-    user: 'postgres',
-    // TODO: Enter PostgreSQL password
-    password: 'password',
-    host: 'localhost',
-    database: 'mmsearch_db'
-  },
-  console.log(`Connected to the movies_db database.`)
-)
-
-pool.connect();
 
 // Post Request
 // app.post('/api/new-movie', ({ body }, res) => {

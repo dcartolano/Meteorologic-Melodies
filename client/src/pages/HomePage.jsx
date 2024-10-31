@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getLatLon, getWeatherConditions } from '../../../server/api/weatherAPI';
+//import { getLatLon, getWeatherConditions } from '../../../server/api/weatherAPI';
 
 
 const HomePage = () => {
