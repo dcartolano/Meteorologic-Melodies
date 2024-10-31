@@ -1,0 +1,1 @@
+select zipcode from locations
