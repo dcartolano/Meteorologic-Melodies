@@ -13,14 +13,12 @@ const app = express();
 // Connect to database
 const pool = new Pool(
   {
-    // TODO: Enter PostgreSQL username
-    user: 'postgres',
-    // TODO: Enter PostgreSQL password
-    password: 'password',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     host: 'localhost',
-    database: 'locations_db'
+    database: process.env.DB_NAME,
   },
-  console.log(`Connected to the locations_db database.`)
+  console.log(`Connected to the ${process.env.DB_NAME} database.`)
 )
 
 pool.connect();
@@ -40,38 +38,38 @@ app.get('/api/weather', async (req, res) => {
 });
 
 // Post Request
-// app.post('/api/new-movie', ({ body }, res) => {
-//   const sql = `INSERT INTO movies (movie_name)
-//     VALUES ($1)`;
-//   const params = [body.movie_name];
+app.post('/api/new-location', ({ body }, res) => {
+  const sql = `INSERT INTO movies (zipcode)
+    VALUES ($1)`;
+  const params = [body.zipcode]; // is this correct???
 
-//   pool.query(sql, params, (err, result) => {
-//     if (err) {
-//       res.status(400).json({ error: err.message });
-//       return;
-//     }
-//     res.json({
-//       message: 'success',
-//       data: body
-//     });
-//   });
-// });
+  pool.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: body
+    });
+  });
+});
 
 // Get Request
-// app.get('/api/movies', (req, res) => {
-//   const sql = `SELECT id, movie_name AS title FROM movies`;
+app.get('/api/locations', (req, res) => {
+  const sql = `SELECT zipcode FROM locations`;
 
-//   pool.query(sql, (err, { rows }) => {
-//     if (err) {
-//       res.status(500).json({ error: err.message });
-//       return;
-//     }
-//     res.json({
-//       message: 'success',
-//       data: rows
-//     });
-//   });
-// });
+  pool.query(sql, (err, { rows }) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: rows
+    });
+  });
+});
 
 // Delete Request
 // app.delete('/api/movie/:id', (req, res) => {
