@@ -1,3 +1,4 @@
+import pg from 'pg';
 require("dotenv").config(); 
 const weatherAPI = require('./utils/weatherAPI');
 
@@ -10,19 +11,19 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Connect to database
-// const pool = new Pool(
-//   {
-//     // TODO: Enter PostgreSQL username
-//     user: 'postgres',
-//     // TODO: Enter PostgreSQL password
-//     password: 'password',
-//     host: 'localhost',
-//     database: 'mmsearch_db'
-//   },
-//   console.log(`Connected to the movies_db database.`)
-// )
+const pool = new Pool(
+  {
+    // TODO: Enter PostgreSQL username
+    user: 'postgres',
+    // TODO: Enter PostgreSQL password
+    password: 'password',
+    host: 'localhost',
+    database: 'location_db'
+  },
+  console.log(`Connected to the movies_db database.`)
+)
 
-// pool.connect();
+pool.connect();
 
 // Express middleware
 app.use(express.urlencoded({ extended: false }));

@@ -1,11 +1,9 @@
-
 const getLatLon = async (zipcode) => {
     console.log('Weather API Key = ', process.env.WEATHER_API_KEY);
     try {
         
         const latLonResponse = await fetch(
-            `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=
-        ${process.env.WEATHER_API_KEY}`
+            `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${process.env.WEATHER_API_KEY}`
         );
         console.log('latLonResponse:', latLonResponse);
         const latLonData = await latLonResponse.json();
