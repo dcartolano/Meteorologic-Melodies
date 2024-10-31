@@ -1,4 +1,5 @@
 import "dotenv/config"
+const weatherAPI = require('./utils/weatherAPI');
 
 const express = require('express');
 // Import and require Pool (node-postgres)
@@ -11,6 +12,15 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.get('/api/weather', async (req, res) => {
+  try {
+      const weatherData = await weatherAPI.getLatLon(); // Assuming you have a function to fetch data
+      res.json(weatherData);
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch weather data' });
+  }
+});
 
 // Connect to database
 const pool = new Pool(
