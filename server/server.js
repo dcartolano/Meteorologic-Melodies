@@ -1,4 +1,4 @@
-import pg from 'pg';
+//import pg from 'pg';
 require("dotenv").config(); 
 const weatherAPI = require('./utils/weatherAPI');
 
@@ -18,9 +18,9 @@ const pool = new Pool(
     // TODO: Enter PostgreSQL password
     password: 'password',
     host: 'localhost',
-    database: 'location_db'
+    database: 'locations_db'
   },
-  console.log(`Connected to the movies_db database.`)
+  console.log(`Connected to the locations_db database.`)
 )
 
 pool.connect();
