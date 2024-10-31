@@ -39,7 +39,7 @@ app.get('/api/weather', async (req, res) => {
 
 // Post Request
 app.post('/api/new-location', ({ body }, res) => {
-  const sql = `INSERT INTO movies (zipcode)
+  const sql = `INSERT INTO locations (zipcode)
     VALUES ($1)`;
   const params = [body.zipcode]; // is this correct???
 
