@@ -1,5 +1,8 @@
 import { useState } from 'react';
-//import { getLatLon, getWeatherConditions } from '../../../server/api/weatherAPI';
+
+import CurrentConditions from '../components/CurrentConditions';
+import PlaylistCard from '../components/PlaylistCard';
+import RecentSearches from '../components/RecentSearches';
 
 
 const HomePage = () => {
@@ -7,37 +10,27 @@ const HomePage = () => {
     const [searchInput, setSearchInput] = useState('');
     const [latLonData, setLatLonData] = useState({}); // may need to change intial value, tried to set it as an empty object
 
-    // IGONORE THESE FOR NOW
-    //   const addToWatchList = () => {
-    //     let parsedFilmsToWatch: Film[] = [];
-    //     const storedFilmsToWatch = localStorage.getItem('filmsToWatch');
-    //     if (typeof storedFilmsToWatch === 'string') {
-    //       parsedFilmsToWatch = JSON.parse(storedFilmsToWatch);
-    //     }
-    //     parsedFilmsToWatch.push(currentFilm);
-    //     localStorage.setItem('filmsToWatch', JSON.stringify(parsedFilmsToWatch));
-    //   };
-
-    //   const addToSeenItList = () => {
-    //     let parsedAlreadySeenFilms: Film[] = [];
-    //     const storedAlreadySeenFilms = localStorage.getItem('alreadySeenFilms');
-    //     if (typeof storedAlreadySeenFilms === 'string') {
-    //       parsedAlreadySeenFilms = JSON.parse(storedAlreadySeenFilms);
-    //     }
-    //     parsedAlreadySeenFilms.push(currentFilm);
-    //     localStorage.setItem(
-    //       'alreadySeenFilms',
-    //       JSON.stringify(parsedAlreadySeenFilms)
-    //     );
-    //   };
-
     const searchForLatLonbyZipcode = async (event, zipcode) => {
         event.preventDefault();
-        const latLonObject = await getLatLon(zipcode);
-        console.log(latLonObject)
 
-        setLatLonData(latLonObject);
-    };
+        try {
+            const response = await fetch(`/api/weather?zip=${zip}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+      
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+      
+            const weatherData = await response.json();
+            console.log(weatherData); // Handle the weather data as needed
+          } catch (error) {
+            console.error('Error fetching weather data:', error);
+          }
+        };
 
     return (
         <>
@@ -49,8 +42,8 @@ const HomePage = () => {
                 >
                     <input
                         type='text'
-                        name=''
-                        id=''
+                        name='zipcode'
+                        id='zipcode'
                         placeholder='Enter your Zipcode'
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
@@ -59,11 +52,21 @@ const HomePage = () => {
                     </button>
                 </form>
             </section>
-            {/* <FilmCard
-        currentFilm={currentFilm}
-        addToWatchList={addToWatchList}
-        addToSeenItList={addToSeenItList}
-      /> */}
+            <div>
+                <RecentSearches 
+                // RecentSearches = {recentSearches}
+                />
+            </div>
+            <div>
+                <CurrentConditions 
+                // Conditions={conditions}
+                />
+            </div>
+            <div>
+                <PlaylistCard 
+                        // Playlists={playlists}
+                />
+            </div>
         </>
     );
 };
