@@ -1,6 +1,10 @@
 //import pg from 'pg';
 require("dotenv").config(); 
 const weatherAPI = require('./utils/weatherAPI');
+const spotifyAPI = require('./utils/spotifyAPI');
+const cors = require('cors');
+
+const request = require('request');
 
 const express = require('express');
 // Import and require Pool (node-postgres)
@@ -26,11 +30,25 @@ pool.connect();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 app.get('/api/weather', async (req, res) => {
   try {
-      const weatherData = await weatherAPI.getLatLon(req); // Assuming you have a function to fetch data
+    // console.log(req);
+          // get the lat and lon
+      const weatherData = await weatherAPI.getLatLon(req.query.zip); // Assuming you have a function to fetch data
       console.log(weatherData);
+      // console.log(weatherData);
+      // pass in the lat and lon in the request to get the weather conditions
+      const weatherData2 = await weatherAPI.getWeatherConditions(weatherData.lat, weatherData.lon);
+      
+      console.log(weatherData2);
+      // making another req to spotify using the weather conditions from query
+      const spotifyData = await spotifyAPI.getPlaylists('clouds', 'BQB8Fe_H6rc7jiqg0aDcvuJ5aMQ3eqcVRsn2Xx8smL-eTOaa83lcqDuXf5uUwYKPJAESezfGDSzI-FQ6pyKTbait_hsdiLJYWAM79O7cBWd-ogNDxK8');
+
+      console.log(spotifyData);
+      // then, returning the playlists from spotify
+      // then, updating the database with the weather conditions and the playlist
       res.json(weatherData);
   } catch (error) {
       res.status(500).json({ error: 'Failed to fetch weather data' });
@@ -69,6 +87,37 @@ app.get('/api/locations', (req, res) => {
       data: rows
     });
   });
+});
+
+app.get('/refresh_token', function(req, res) {
+
+  var refresh_token = "req.query.refresh_token";
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + (new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
+    },
+    form: {
+      grant_type: 'client_credentials',
+      refresh_token: refresh_token
+    },
+    json: true
+  };
+
+  // console.log(authOptions);
+  request.post(authOptions, function(error, response, body) {
+    console.log('error: ', error);
+    if (!error && response.statusCode === 200) {
+      var access_token = body.access_token,
+          refresh_token = body.refresh_token || refresh_token;
+      res.send({
+        'access_token': access_token,
+        'refresh_token': refresh_token
+      });
+    }
+  });
+// res.json({});
 });
 
 // Delete Request
