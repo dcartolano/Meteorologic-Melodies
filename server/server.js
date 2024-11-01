@@ -51,7 +51,7 @@ app.get('/api/weather', async (req, res) => {
       // then, updating the database with the weather conditions and the playlist
       res.json(weatherData);
   } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch weather data' });
+    res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 });
 
