@@ -12,21 +12,20 @@ const HomePage = () => {
 
     const searchForLatLonbyZipcode = async (event, zipcode) => {
         event.preventDefault();
-
+        console.log('zipcode: ', zipcode);
         try {
-            const response = await fetch(`/api/weather?zip=${zip}`, {
+            const response = await fetch(`http://localhost:3001/api/weather?zip=${zipcode}`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
               },
             });
-      
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-      
             const weatherData = await response.json();
             console.log(weatherData); // Handle the weather data as needed
+            setLatLonData(weatherData);
           } catch (error) {
             console.error('Error fetching weather data:', error);
           }
