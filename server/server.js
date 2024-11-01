@@ -29,7 +29,7 @@ app.use(express.json());
 
 app.get('/api/weather', async (req, res) => {
   try {
-      const weatherData = await weatherAPI.getLatLon('60004'); // Assuming you have a function to fetch data
+      const weatherData = await weatherAPI.getLatLon(req); // Assuming you have a function to fetch data
       console.log(weatherData);
       res.json(weatherData);
   } catch (error) {
