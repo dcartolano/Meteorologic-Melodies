@@ -1,5 +1,3 @@
-
-
 function PlaylistCard({PlaylistName, PlaylistUrl}) {
     // console.log('playlist name: ', PlaylistName);
     return (
