@@ -39,7 +39,7 @@ app.get('/api/weather', async (req, res) => {
     // console.log(latLonData);
     // pass in the lat and lon in the request to get the weather conditions
     const bigWeatherData = await weatherAPI.getWeatherConditions(latLonData.lat, latLonData.lon);
-    conditionsData = bigWeatherData.list[0].weather[0].description;
+    const conditionsData = bigWeatherData.list[0].weather[0].description;
     // console.log(conditionsData);
     // console.log('conditionsData description: ', conditionsData.list[0].weather[0].description); // conditions keywords
     let token = '';
