@@ -8,9 +8,15 @@ import RecentSearches from '../components/RecentSearches';
 const HomePage = () => {
 
     const [searchInput, setSearchInput] = useState('');
-    const [latLonData, setLatLonData] = useState({}); // may need to change intial value, tried to set it as an empty object
+    // const [latLonData, setLatLonData] = useState({}); may need to change intial value, tried to set it as an empty object
+    let [conditionsResponse, setConditionsResponse] = useState('');
+    let [playlistsResponse, setPlaylistsResponse] = useState({});
+    // let conditionsResponse;
+    // let playlistsResponse;
 
-    const searchForLatLonbyZipcode = async (event, zipcode) => {
+    // const [latLonData, setLatLonData] = useState({});
+
+    const getConditionsAndPlaylists = async (event, zipcode) => {
         event.preventDefault();
         console.log('zipcode: ', zipcode);
         try {
@@ -25,8 +31,11 @@ const HomePage = () => {
             }
 
             const responseData = await response.json();
-            let conditionsResponse = responseData.conditionsData;
-            let playlistsResponse = responseData.playlistsData;
+            conditionsResponse = responseData.conditionsData;
+            setConditionsResponse(responseData.conditionsData);
+
+            playlistsResponse = responseData.playlistsData;
+            setPlaylistsResponse(responseData.playlistsData);
 
             console.log('conditionsResponse: ', conditionsResponse);
             console.log('playlistsResponse: ', playlistsResponse);
@@ -44,7 +53,7 @@ const HomePage = () => {
             <section id='searchSection'>
                 <form
                     onSubmit={(event) =>
-                        searchForLatLonbyZipcode(event, searchInput)
+                        getConditionsAndPlaylists(event, searchInput)
                     }
                 >
                     <input
@@ -66,12 +75,12 @@ const HomePage = () => {
             </div>
             <div>
                 <CurrentConditions
-                // Conditions={conditions}
+                Conditions={conditionsResponse}
                 />
             </div>
             <div>
                 <PlaylistCard
-                // Playlists={playlists}
+                //Playlists={playlistsResponse}
                 />
             </div>
         </>
