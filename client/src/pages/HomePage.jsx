@@ -15,21 +15,29 @@ const HomePage = () => {
         console.log('zipcode: ', zipcode);
         try {
             const response = await fetch(`http://localhost:3001/api/weather?zip=${zipcode}`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
             }
-            const weatherData = await response.json();
-            console.log(weatherData); // Handle the weather data as needed
-            setLatLonData(weatherData);
-          } catch (error) {
+
+            const responseData = await response.json();
+            let conditionsResponse = responseData.conditionsData;
+            let playlistsResponse = responseData.playlistsData;
+
+            console.log('conditionsResponse: ', conditionsResponse);
+            console.log('playlistsResponse: ', playlistsResponse);
+
+            // TO-DO: update this state variable, and make another state variable, and also rename this one
+            // setLatLonData(weatherData);
+            
+        } catch (error) {
             console.error('Error fetching weather data:', error);
-          }
-        };
+        }
+    };
 
     return (
         <>
@@ -52,18 +60,18 @@ const HomePage = () => {
                 </form>
             </section>
             <div>
-                <RecentSearches 
+                <RecentSearches
                 // RecentSearches = {recentSearches}
                 />
             </div>
             <div>
-                <CurrentConditions 
+                <CurrentConditions
                 // Conditions={conditions}
                 />
             </div>
             <div>
-                <PlaylistCard 
-                        // Playlists={playlists}
+                <PlaylistCard
+                // Playlists={playlists}
                 />
             </div>
         </>
