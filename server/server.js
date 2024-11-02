@@ -38,23 +38,64 @@ app.get('/api/weather', async (req, res) => {
     const latLonData = await weatherAPI.getLatLon(req.query.zip); // get the object that contains the lat and lon data
     // console.log(latLonData);
     // pass in the lat and lon in the request to get the weather conditions
-    const conditionsData = await weatherAPI.getWeatherConditions(latLonData.lat, latLonData.lon);
+    const bigWeatherData = await weatherAPI.getWeatherConditions(latLonData.lat, latLonData.lon);
+    conditionsData = bigWeatherData.list[0].weather[0].description;
     // console.log(conditionsData);
     // console.log('conditionsData description: ', conditionsData.list[0].weather[0].description); // conditions keywords
-    // TO-DO: NEED TO GET RID OF THE FOLLOWING LINES RELATED TO TOKEN AND MAKE THEM ACTUALLY WORK AND RETURN A TOKEN FOR GETPLAYLISTS FUNCTION TO USE
-    // const token = await spotifyAPI.spotifyToken();
-    // token.then((i) => { return i });
+    let token = '';
+    try {
+      const response = await fetch(`http://localhost:3001/refresh_token`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const spotifyToken = await response.json();
+      // console.log(spotifyToken.access_token); 
+      token = spotifyToken.access_token;
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
     // console.log('token: ', token);
     // then, returning the playlists from spotify
-    const spotifyData = await spotifyAPI.getPlaylists(conditionsData.list[0].weather[0].description, token); // currently token does not work and needs to be hard-coded
-    // console.log(spotifyData);
+    const playlistsData = await spotifyAPI.getPlaylists(conditionsData, token); 
+    // console.log(playlistsData);
+
+    // console.log(conditionsData);
+    // console.log(playlistsData);
+    res.send({
+      'conditionsData': conditionsData,
+      'playlistsData': playlistsData
+    });
+    // TO-DO: see below
     // then, update the database with the weather conditions and the playlist (maybe?? let's talk about this)
-    // TO-DO
-    res.json(weatherData);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch weather data' });
   }
 });
+
+const searchForLatLonbyZipcode = async (event, zipcode) => {
+  // console.log('zipcode: ', zipcode);
+  try {
+    const response = await fetch(`http://localhost:3001/api/weather?zip=${zipcode}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const weatherData = await response.json();
+    // console.log(weatherData); 
+    setLatLonData(weatherData);
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+  }
+};
 
 // Post Request
 app.post('/api/new-location', ({ body }, res) => {
