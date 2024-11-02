@@ -32,17 +32,24 @@ app.use(express.json());
 app.use(cors());
 
 // TO-DO: consider renaming this end-point (route)
+// maybe externalData? or just external?
+// end-point to retrieve weather conditions and playlist data from both the Open Weather and Spotify external API's when passed 
 app.get('/api/weather', async (req, res) => {
   try {
-    // get the lat and lon
-    const latLonData = await weatherAPI.getLatLon(req.query.zip); // get the object that contains the lat and lon data
-    // console.log(latLonData);
-    // pass in the lat and lon in the request to get the weather conditions
+    // // passes in the zipcode entered by the user to get back the objec that contians the assosciated lat and lon values
+    const latLonData = await weatherAPI.getLatLon(req.query.zip);
+    // log to test that object containing the lat and lon values comes back correctly
+    // console.log('latLonData: ', latLonData); 
+    // // passes in the lat and lon in the request to get the big weather object that contains the conditions
     const bigWeatherData = await weatherAPI.getWeatherConditions(latLonData.lat, latLonData.lon);
+    // // log to test that the big object containing the weather conditions values comes back correctly
+    // console.log('bigWeatherData: ', bigWeatherData);    // gets the conditions data from the big weather object
     const conditionsData = bigWeatherData.list[0].weather[0].description;
-    // console.log(conditionsData);
-    // console.log('conditionsData description: ', conditionsData.list[0].weather[0].description); // conditions keywords
+    // // log to test that we are grabbing the conditions from the big weather object correctly
+    // console.log('conditionsData: ', conditionsData);
+    // // defines token so that it can be used later
     let token = '';
+    // // uses the refresh_token endpoint to get Spotify access token that we need to pass to getPlaylists
     try {
       const response = await fetch(`http://localhost:3001/refresh_token`, {
         method: 'GET',
@@ -54,18 +61,18 @@ app.get('/api/weather', async (req, res) => {
         throw new Error('Network response was not ok');
       }
       const spotifyToken = await response.json();
-      // console.log(spotifyToken.access_token); 
+      // // log to check that token is coming back ok from the route and we are accessing the correct parameter
+      // console.log('token (inside fetch): ', spotifyToken.access_token); 
       token = spotifyToken.access_token;
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
-    // console.log('token: ', token);
-    // then, returning the playlists from spotify
-    const playlistsData = await spotifyAPI.getPlaylists(conditionsData, token); 
-    // console.log(playlistsData);
-
-    // console.log(conditionsData);
-    // console.log(playlistsData);
+    // // log to check that our token is coming back ok and is usable in the main part of the route
+    // console.log('token (after fetch): ', token);
+    // // passes our conditions and spotify token to the getPlaylists function in the spotifyAPI util 
+    const playlistsData = await spotifyAPI.getPlaylists(conditionsData, token);
+    // // log to check that the object that contains all the playlists is coming back correctly
+    // console.log('playlistData: ' playlistsData);
     res.send({
       'conditionsData': conditionsData,
       'playlistsData': playlistsData
@@ -77,6 +84,8 @@ app.get('/api/weather', async (req, res) => {
   }
 });
 
+// grabs the full table
+// may not need this one at all
 const searchForLatLonbyZipcode = async (event, zipcode) => {
   // console.log('zipcode: ', zipcode);
   try {
@@ -97,11 +106,11 @@ const searchForLatLonbyZipcode = async (event, zipcode) => {
   }
 };
 
-// Post Request
+// adds a new zip code to the locations table
 app.post('/api/new-location', ({ body }, res) => {
   const sql = `INSERT INTO locations (zipcode)
     VALUES ($1)`;
-  const params = [body.zipcode]; // is this correct???
+  const params = [body.zipcode];
 
   pool.query(sql, params, (err, result) => {
     if (err) {
@@ -131,6 +140,7 @@ app.get('/api/locations', (req, res) => {
   });
 });
 
+// uses Spotify Client ID and Secret to request a token that is good for an hour for spotifyAPI.js getPlaylists function to use
 app.get('/refresh_token', function (req, res) {
 
   var refresh_token = "req.query.refresh_token";
