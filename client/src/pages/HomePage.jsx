@@ -46,7 +46,7 @@ const HomePage = () => {
             //console.log('playlist name:', playlistsResponse.playlists.items[0].name);
             // console.log('playlist: ', playlistsResponse.playlists); // Check the structure here
             // console.log('playlist item: ', playlistsResponse.playlists.items); // Check if items is defined
-            // console.log('playlist item[0]: ', playlistsResponse.playlists.items[0]);
+            // console.log('playlist item[0]: ', playlistsResponse.playlists.items[0].images.url);
 
             // TO-DO: update this state variable, and make another state variable, and also rename this one
             // setLatLonData(weatherData);
@@ -58,49 +58,57 @@ const HomePage = () => {
 
     return (
         <>
-            <section id='searchSection'>
-                <form
-                    onSubmit={(event) =>
-                        getConditionsAndPlaylists(event, searchInput)
+            <div className=''>
+                <section id='searchSection'>
+                    <form
+                        onSubmit={(event) =>
+                            getConditionsAndPlaylists(event, searchInput)
+                        }
+                    >
+                        <input
+                            type='text'
+                            name='zipcode'
+                            id='zipcode'
+                            placeholder='Enter your Zipcode'
+                            onChange={(e) => setSearchInput(e.target.value)}
+                        />
+                        <button id='searchBtn'>
+                            Search
+                        </button>
+                    </form>
+                </section>
+                <div>
+                    <RecentSearches
+                    // RecentSearches = {recentSearches}
+                    />
+                </div>
+                <div>
+                    <CurrentConditions
+                    Conditions={conditionsResponse}
+                    />
+                </div>
+                <div>
+                    <h2 className="">
+                        {`Playlists to match your mood:`}
+                    </h2>
+                </div>
+                <div>
+                    {playlistsResponse ? playlistsResponse.map((playlist) => (
+                        <PlaylistCard
+                            key={playlist.id}
+                            PlaylistName={playlist.name}
+                            PlaylistUrl={playlist.external_urls.spotify}
+                            PlaylistPicture={playlist.images[0].url}
+                            // Playlists={playlistsResponse}
+                        />
+                    )
+                    ) : (
+                        <div>
+                        Playlists go here...
+                        </div>
+                    )
                     }
-                >
-                    <input
-                        type='text'
-                        name='zipcode'
-                        id='zipcode'
-                        placeholder='Enter your Zipcode'
-                        onChange={(e) => setSearchInput(e.target.value)}
-                    />
-                    <button id='searchBtn'>
-                        Search
-                    </button>
-                </form>
-            </section>
-            <div>
-                <RecentSearches
-                // RecentSearches = {recentSearches}
-                />
-            </div>
-            <div>
-                <CurrentConditions
-                Conditions={conditionsResponse}
-                />
-            </div>
-            <div>
-                {playlistsResponse ? playlistsResponse.map((playlist) => (
-                    <PlaylistCard
-                        key={playlist.id}
-                        PlaylistName={playlist.name}
-                        PlaylistUrl={playlist.external_urls.spotify}
-                        // Playlists={playlistsResponse}
-                    />
-                  )
-                ) : (
-                    <div>
-                      Playlists go here...
-                    </div>
-                  )
-                }
+                </div>
             </div>
         </>
     );
