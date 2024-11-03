@@ -5,18 +5,18 @@ function PlaylistCard({PlaylistName, PlaylistUrl, PlaylistPicture}) {
     return (
         <a href={PlaylistUrl} target="_blank">
             <div className="">
-                <a>
+                {/* <a> */}
                     <img src={PlaylistPicture} alt="Playlist Image"></img>
-                </a>
+                {/* </a> */}
                 <div>
                     <h3 className="">
                         {`Spotify Playlist: `}
                     </h3>
                 </div>
                 <div>
-                    <a className="" >
+                    {/* <a className="" > */}
                         {`Click here for ${PlaylistName}`}
-                    </a>
+                    {/* </a> */}
                 </div>
                 {/* <div>
                     <h3 className="">
