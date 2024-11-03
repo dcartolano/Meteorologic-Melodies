@@ -34,7 +34,7 @@ app.use(cors());
 // TO-DO: consider renaming this end-point (route)
 // maybe externalData? or just external?
 // end-point to retrieve weather conditions and playlist data from both the Open Weather and Spotify external API's when passed 
-app.get('/api/weather', async (req, res) => {
+app.get('/api/external', async (req, res) => {
   try {
     // // passes in the zipcode entered by the user to get back the objec that contians the assosciated lat and lon values
     const latLonData = await weatherAPI.getLatLon(req.query.zip);
@@ -142,10 +142,14 @@ app.get('/api/locations', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json({
-      message: 'success',
+    // res.json({
+    //   message: 'success',
+    //   data: rows
+    // });
+    res.send({
       data: rows
     });
+
   });
 });
 
