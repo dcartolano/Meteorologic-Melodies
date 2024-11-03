@@ -86,8 +86,6 @@ const HomePage = () => {
         // optional return function
         // return () => {
         //     console.log('I clean up');
-        // console.log(recentLocations);
-        // console.log(recentLocations[0].zipcode);
         // };
     },[]) // dependency array
 
@@ -130,7 +128,7 @@ const HomePage = () => {
                     </form>
                 </section>
                 <div>
-                    {recentLocations != [] ? recentLocations.map((location) => (
+                    {recentLocations.length > 0 ? recentLocations.map((location) => (
                         // <RecentSearches
                         //     key={location.id}
                         //     RecentLocation={location.zipcode}
