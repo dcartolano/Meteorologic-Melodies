@@ -43,12 +43,18 @@ app.get('/api/weather', async (req, res) => {
     // // passes in the lat and lon in the request to get the big weather object that contains the conditions
     const bigWeatherData = await weatherAPI.getWeatherConditions(latLonData.lat, latLonData.lon);
     // // log to test that the big object containing the weather conditions values comes back correctly
-    // console.log('bigWeatherData: ', bigWeatherData);    // gets the conditions data from the big weather object
+    // console.log('bigWeatherData: ', bigWeatherData);
     const conditionsData = bigWeatherData.list[0].weather[0].description;
+
+    const conditionsIcon = bigWeatherData.list[0].weather[0].icon;
+    const conditionsIconUrl = `http://openweathermap.org/img/w/${conditionsIcon}.png`;
+
     // // log to test that we are grabbing the conditions from the big weather object correctly
     // console.log('conditionsData: ', conditionsData);
+
     // // defines token so that it can be used later
     let token = '';
+
     // // uses the refresh_token endpoint to get Spotify access token that we need to pass to getPlaylists
     try {
       const response = await fetch(`http://localhost:3001/refresh_token`, {
@@ -69,12 +75,15 @@ app.get('/api/weather', async (req, res) => {
     }
     // // log to check that our token is coming back ok and is usable in the main part of the route
     // console.log('token (after fetch): ', token);
+
     // // passes our conditions and spotify token to the getPlaylists function in the spotifyAPI util 
     const playlistsData = await spotifyAPI.getPlaylists(conditionsData, token);
     // // log to check that the object that contains all the playlists is coming back correctly
     // console.log('playlistData: ' playlistsData);
+
     res.send({
       'conditionsData': conditionsData,
+      'conditionsIconUrl': conditionsIconUrl,
       'playlistsData': playlistsData
     });
     // TO-DO: see below
