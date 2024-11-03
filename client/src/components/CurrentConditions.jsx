@@ -1,10 +1,10 @@
 
 
-function CurrentConditions({Conditions = ""}) {
+function CurrentConditions({Conditions = "", ConditionsUrl}) {
     console.log(Conditions);
     return (
         <div className="">
-            
+            <img src={ConditionsUrl} alt="" />
             <h3 className="">
                 {`Your current weather conditions... ${Conditions}`}
             </h3>
