@@ -2,7 +2,7 @@
 function Footer() {
     return (
         <footer className="">
-            <h4 className="">Meteorologic Melodies (footer)</h4>
+            <h4 className="">Meteorologic Melodies</h4>
         </footer>
     );
 }
