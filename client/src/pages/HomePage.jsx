@@ -167,12 +167,13 @@ const HomePage = () => {
                             PlaylistName={playlist.name}
                             PlaylistUrl={playlist.external_urls.spotify}
                             PlaylistPicture={playlist.images[0].url}
-                        // Playlists={playlistsResponse}
+                            PlaylistOwnerName={playlist.owner.display_name}
+                            PlaylistOwnerLink={playlist.owner.external_urls.spotify}
                         />
                     )
                     ) : (
                         <div>
-                            Playlists go here...
+                            Your playlists will appear here...
                         </div>
                     )
                     }
