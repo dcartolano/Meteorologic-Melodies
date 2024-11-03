@@ -2,7 +2,7 @@
 function RecentSearches() {
     return (
         <div className="">
-            <h5 className="">Recent searches go here...</h5>
+            <h5 className=""></h5>
         </div>
     );
 }
