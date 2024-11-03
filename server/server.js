@@ -135,7 +135,7 @@ app.post('/api/new-location', ({ body }, res) => {
 
 // Get Request
 app.get('/api/locations', (req, res) => {
-  const sql = `SELECT zipcode FROM locations`;
+  const sql = `SELECT * FROM locations`;
 
   pool.query(sql, (err, { rows }) => {
     if (err) {
