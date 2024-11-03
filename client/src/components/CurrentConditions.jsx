@@ -1,7 +1,7 @@
 
 
-function CurrentConditions({Conditions = "", ConditionsUrl}) {
-    console.log(Conditions);
+function CurrentConditions({Conditions, ConditionsUrl}) {
+    // console.log(Conditions);
     return (
         <div className="">
             <img src={ConditionsUrl} alt="" />
