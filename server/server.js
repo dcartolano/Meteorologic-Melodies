@@ -41,6 +41,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
+
+app.use(express.static('../client/dist'));
 // TO-DO: consider renaming this end-point (route)
 // maybe externalData? or just external?
 // end-point to retrieve weather conditions and playlist data from both the Open Weather and Spotify external API's when passed 
@@ -264,9 +266,9 @@ app.get('/refresh_token', function (req, res) {
 // });
 
 // Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
+// app.use((req, res) => {
+//   res.status(404).end();
+// });
 
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
