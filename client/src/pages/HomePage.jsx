@@ -16,6 +16,7 @@ const HomePage = () => {
     const getConditionsAndPlaylists = async (event, zipcode) => {
         event.preventDefault();
         console.log('zipcode: ', zipcode);
+        // sendZipToDb(zipcode);
         try {
             const response = await fetch(`http://localhost:3001/api/external?zip=${zipcode}`, {
                 method: 'GET',
@@ -45,6 +46,34 @@ const HomePage = () => {
             console.error('Error fetching weather data:', error);
         }
     };
+
+    // const sendZipToDb = async (zip) => {
+    //     console.log('zip: ', zip);
+    //     try {
+    //         const response = await fetch(`http://localhost:3001/api/new-location`, {
+    //             method: 'POST',
+    //             mode: 'no-cors',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: `{"zipcode": ${zip}}`
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+
+    //         const responseZTD = await response.json();
+
+    //         // console.log('zipcode to db response: ', responseZTD)
+
+    //         return responseZTD;         
+
+    //     } catch (error) {
+    //         console.error('Error adding zip to database:', error);
+    //         return Promise.reject('Could not create new zipcode');
+    //     }
+    // };
 
     const getRecentLocations = async () => {
         try {
