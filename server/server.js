@@ -14,15 +14,24 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Connect to database
-const pool = new Pool(
-  {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    host: 'localhost',
-    database: process.env.DB_NAME,
-  },
-  console.log(`Connected to the ${process.env.DB_NAME} database.`)
-)
+
+let pool = null;
+if (process.env.DB_URL) {
+  pool = new Pool({
+    connectionString: process.env.DB_URL
+  })
+} else {
+  pool = new Pool(
+    {
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      host: 'localhost',
+      database: process.env.DB_NAME,
+    },
+    console.log(`Connected to the ${process.env.DB_NAME} database.`)
+  )
+}
+
 
 pool.connect();
 
