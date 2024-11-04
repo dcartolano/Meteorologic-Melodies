@@ -3,11 +3,11 @@
 function CurrentConditions({Conditions, ConditionsUrl}) {
     // console.log(Conditions);
     return (
-        <div className="">
-            <img src={ConditionsUrl} alt="" />
-            <h3 className="">
+        <div className="conditionsDiv">
+            <img className="conditionsIcon" src={ConditionsUrl} alt="" />
+            <h4 className="conditionsText">
                 {`Your current weather conditions... ${Conditions}`}
-            </h3>
+            </h4>
         </div>
     );
 }
