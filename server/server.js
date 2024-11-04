@@ -178,7 +178,7 @@ app.get('/api/locations', (req, res) => {
 });
 
 // uses Spotify Client ID and Secret to request a token that is good for an hour for spotifyAPI.js getPlaylists function to use
-app.get('/refresh_token', function (req, res) {
+app.get('/api/refresh_token', function (req, res) {
 
   var refresh_token = "req.query.refresh_token";
   var authOptions = {
