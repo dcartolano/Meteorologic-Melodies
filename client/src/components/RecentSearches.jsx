@@ -1,6 +1,6 @@
 
 function RecentSearches(RecentLocation) {
-    console.log(RecentLocation);
+    console.log('RecentLocation from inside RecentSearches: ', RecentLocation);
     
         return (
             <div className="">
