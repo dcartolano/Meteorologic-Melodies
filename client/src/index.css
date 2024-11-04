@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #213547;
   background-color: #242424;
 
   font-synthesis: none;
@@ -15,9 +15,10 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #213547;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -28,6 +29,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: rgb(247, 247, 247);
 }
 
 h1 {
@@ -35,14 +37,20 @@ h1 {
   line-height: 1.1;
 }
 
+h3 {
+  color: #213547;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
+  margin-left: 6px;
+  margin-right: 6px;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #404448;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -66,3 +74,100 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.spotifyPlaylistCard {
+  height: 300px;
+  width: 700px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spotifyPlaylistPicture {
+  height: 200px;
+  width: 200px;
+  margin: 20px;
+  margin-bottom: 10px;
+}
+
+.conditionsText {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.conditionsIcon {
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.conditionsDiv {
+  height: 100px;
+  margin-bottom: 30px;
+  /* background-color: aliceblue; */
+  ;
+}
+
+/* .MMHeader {
+  background-color: rgb(251, 253, 255);
+} */
+
+.resetButton {
+  margin: 10px;
+}
+
+#root {
+  background-color: rgb(251, 253, 255);
+}
+
+/* rgb(251, 253, 255) <- lighter version of aliceblue */
+
+.weatherConditionsInfoText {
+  margin-top: 5px;
+}
+
+.footerNameLinks {
+  font-weight: 700;
+}
+
+#dataSourcesText {
+  margin-top: 100px;
+  margin-bottom: 10px;
+  color: #213547;
+}
+
+.footerProjectName {
+  margin: 0px;
+}
+
+#footerCreatorText {
+  margin-top: 4px;
+}
+
+/* .playlistText {
+  width: 500px;
+} */
+
+#spotifyPlaylistCardMiniCard {
+  width: 400px;
+  /* background-color: rgb(247, 247, 247); */
+}
+
+/* .playlistResultsBlackBar {
+  height: 20px;
+  width: fit-content;
+  color: #1a1a1a;
+} */
+
+/* .spotifyPlaylistCardSingle {
+
+} */
+
+/* .capitalizeFirstLetterText {
+  display: inline-block;
+  text-transform: lowercase
+}
+
+.capitalizeFirstLetterText::first-letter {
+  text-transform: uppercase
+} */
