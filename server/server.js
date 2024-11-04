@@ -81,7 +81,7 @@ app.get('/api/external', async (req, res) => {
 
     // // uses the refresh_token endpoint to get Spotify access token that we need to pass to getPlaylists
     try {
-      const response = await fetch(`/refresh_token`, {
+      const response = await fetch(`/api/refresh_token`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ app.get('/api/external', async (req, res) => {
 const searchForLatLonbyZipcode = async (event, zipcode) => {
   // console.log('zipcode: ', zipcode);
   try {
-    const response = await fetch(`http://localhost:3001/api/weather?zip=${zipcode}`, {
+    const response = await fetch(`/api/weather?zip=${zipcode}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
