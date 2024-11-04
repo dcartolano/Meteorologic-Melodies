@@ -13,7 +13,6 @@ const HomePage = () => {
     const [playlistsResponse, setPlaylistsResponse] = useState([]);
     const [recentLocations, setRecentLocations] = useState([]);
 
-
     const getConditionsAndPlaylists = async (event, zipcode) => {
         event.preventDefault();
         console.log('zipcode: ', zipcode);
@@ -122,7 +121,7 @@ const HomePage = () => {
                         }
                         }
                     >
-                        <button id='searchBtn'>
+                        <button id='searchBtn' className='resetButton'>
                             Reset
                         </button>
                     </form>
@@ -142,7 +141,7 @@ const HomePage = () => {
                     )
                     }
                 </div>
-                <div>
+                <div className='weatherConditionsInfoText'>
                     {conditionsResponse ? (
                         <CurrentConditions
                             Conditions={conditionsResponse}
@@ -150,17 +149,20 @@ const HomePage = () => {
                         />
                     ) : (
                         <div>
-                            Current Conditions go here...
+                            <h4>
+                                Your current weather Conditions are...
+                            </h4>
                         </div>
                     )
                     }
                 </div>
                 <div>
                     <h2 className="">
-                        {`Playlists to match your mood:`}
+                        {'Playlist Results For Your Mood:'}
                     </h2>
+                    <div className='playlistResultsBlackBar'></div>
                 </div>
-                <div>
+                <div className=''>
                     {playlistsResponse ? playlistsResponse.map((playlist) => (
                         <PlaylistCard
                             key={playlist.id}
