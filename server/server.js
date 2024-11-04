@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const weatherAPI = require('./utils/weatherAPI');
 const spotifyAPI = require('./utils/spotifyAPI');
+const path = require('path');
 
 const cors = require('cors');
 const request = require('request');
@@ -78,7 +79,7 @@ app.get('/api/external', async (req, res) => {
 
     // // uses the refresh_token endpoint to get Spotify access token that we need to pass to getPlaylists
     try {
-      const response = await fetch(`http://localhost:3001/refresh_token`, {
+      const response = await fetch(`/refresh_token`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -265,6 +266,10 @@ app.get('/refresh_token', function (req, res) {
 // Default response for any other request (Not Found)
 app.use((req, res) => {
   res.status(404).end();
+});
+
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 app.listen(PORT, () => {
