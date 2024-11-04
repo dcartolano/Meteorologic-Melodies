@@ -1,8 +1,9 @@
 
 function Header() {
     return (
-        <header className="">
-            <h1 className="">Meteorologic Melodies</h1>
+        // Header title on page
+        <header className="MMHeader">
+            <h1 className="">Meteorological Melodies</h1>
         </header>
     );
 }
