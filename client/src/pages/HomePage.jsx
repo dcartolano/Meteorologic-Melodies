@@ -18,7 +18,7 @@ const HomePage = () => {
         console.log('zipcode: ', zipcode);
         // sendZipToDb(zipcode);
         try {
-            const response = await fetch(`http://localhost:3001/api/external?zip=${zipcode}`, {
+            const response = await fetch(`/api/external?zip=${zipcode}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const HomePage = () => {
     // const sendZipToDb = async (zip) => {
     //     console.log('zip: ', zip);
     //     try {
-    //         const response = await fetch(`http://localhost:3001/api/new-location`, {
+    //         const response = await fetch(`/api/new-location`, {
     //             method: 'POST',
     //             mode: 'no-cors',
     //             headers: {
@@ -77,7 +77,7 @@ const HomePage = () => {
 
     const getRecentLocations = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/api/locations`, {
+            const response = await fetch(`/api/locations`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,13 +156,16 @@ const HomePage = () => {
                     </form>
                 </section>
                 <div>
-                    {recentLocations.length > 0 ? recentLocations.map((location) => (
-                        // <RecentSearches
-                        //     key={location.id}
-                        //     RecentLocation={location.zipcode}
-                        // />
-                        console.log(location.zipcode)
-                    )
+                    {recentLocations.length > 0 ? recentLocations.map((location) => {
+                        // console.log(location)
+                        <RecentSearches
+                            key={location.id}
+                            RecentLocation={location.zipcode}
+                        />
+                        console.log('location: ', location);
+                        console.log('location.id: ', location.id);
+                        console.log('location.zipcode: ', location.zipcode);
+                    }
                     ) : (
                         <div>
                             Recent searches go here...
