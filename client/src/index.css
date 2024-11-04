@@ -104,13 +104,8 @@ button:focus-visible {
 .conditionsDiv {
   height: 100px;
   margin-bottom: 30px;
-  /* background-color: aliceblue; */
   ;
 }
-
-/* .MMHeader {
-  background-color: rgb(251, 253, 255);
-} */
 
 .resetButton {
   margin: 10px;
@@ -119,8 +114,6 @@ button:focus-visible {
 #root {
   background-color: rgb(251, 253, 255);
 }
-
-/* rgb(251, 253, 255) <- lighter version of aliceblue */
 
 .weatherConditionsInfoText {
   margin-top: 5px;
@@ -144,30 +137,6 @@ button:focus-visible {
   margin-top: 4px;
 }
 
-/* .playlistText {
-  width: 500px;
-} */
-
 #spotifyPlaylistCardMiniCard {
   width: 400px;
-  /* background-color: rgb(247, 247, 247); */
 }
-
-/* .playlistResultsBlackBar {
-  height: 20px;
-  width: fit-content;
-  color: #1a1a1a;
-} */
-
-/* .spotifyPlaylistCardSingle {
-
-} */
-
-/* .capitalizeFirstLetterText {
-  display: inline-block;
-  text-transform: lowercase
-}
-
-.capitalizeFirstLetterText::first-letter {
-  text-transform: uppercase
-} */

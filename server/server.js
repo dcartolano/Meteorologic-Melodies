@@ -1,4 +1,3 @@
-//import pg from 'pg'; // do we still need this?
 require("dotenv").config();
 
 const weatherAPI = require('./utils/weatherAPI');
@@ -43,8 +42,7 @@ app.use(cors());
 
 
 app.use(express.static('../client/dist'));
-// TO-DO: consider renaming this end-point (route)
-// maybe externalData? or just external?
+
 // end-point to retrieve weather conditions and playlist data from both the Open Weather and Spotify external API's when passed 
 app.get('/api/external', async (req, res) => {
   try {
@@ -110,51 +108,10 @@ app.get('/api/external', async (req, res) => {
       'conditionsIconUrl': conditionsIconUrl,
       'playlistsData': playlistsData
     });
-    // TO-DO: see below
-    // then, update the database with the weather conditions and the playlist (maybe?? let's talk about this)
+
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch weather data' });
   }
-});
-
-// grabs the full table
-// may not need this one at all
-const searchForLatLonbyZipcode = async (event, zipcode) => {
-  // console.log('zipcode: ', zipcode);
-  try {
-    const response = await fetch(`/api/weather?zip=${zipcode}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const weatherData = await response.json();
-    // console.log(weatherData); 
-    setLatLonData(weatherData);
-  } catch (error) {
-    console.error('Error fetching weather data:', error);
-  }
-};
-
-// adds a new zip code to the locations table
-app.post('/api/new-location', ({ body }, res) => {
-  const sql = `INSERT INTO locations (zipcode)
-    VALUES ($1)`;
-  const params = [body.zipcode];
-
-  pool.query(sql, params, (err, result) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: body
-    });
-  });
 });
 
 // Get Request
@@ -166,10 +123,6 @@ app.get('/api/locations', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    // res.json({
-    //   message: 'success',
-    //   data: rows
-    // });
     res.send({
       data: rows
     });

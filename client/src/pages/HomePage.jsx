@@ -4,7 +4,6 @@ import CurrentConditions from '../components/CurrentConditions';
 import PlaylistCard from '../components/PlaylistCard';
 import RecentSearches from '../components/RecentSearches';
 
-
 const HomePage = () => {
 
     const [searchInput, setSearchInput] = useState('');
@@ -15,8 +14,7 @@ const HomePage = () => {
 
     const getConditionsAndPlaylists = async (event, zipcode) => {
         event.preventDefault();
-        console.log('zipcode: ', zipcode);
-        // sendZipToDb(zipcode);
+        // console.log('zipcode: ', zipcode);
         try {
             const response = await fetch(`/api/external?zip=${zipcode}`, {
                 method: 'GET',
@@ -34,46 +32,19 @@ const HomePage = () => {
             setConditionsIconUrl(responseData.conditionsIconUrl);
             setPlaylistsResponse(responseData.playlistsData.playlists.items);
 
-            console.log('conditionsResponse: ', conditionsResponse);
-            console.log('conditionsIconUrl: ', conditionsIconUrl);
-            console.log('playlistsResponse: ', playlistsResponse);
+            // check that our setState variables were assigned correctly
+            // console.log('conditionsResponse: ', conditionsResponse);
+            // console.log('conditionsIconUrl: ', conditionsIconUrl);
+            // console.log('playlistsResponse: ', playlistsResponse);
 
-            // console.log('playlist: ', playlistsResponse); // check the structure here
-            //console.log('playlist 1 name:', playlistsResponse[0].name); // check the name of the first playlis
-            // console.log('playlist 1 image: ', playlistsResponse[0].images[0].url); check the image for the firt playlist
+            // console.log('playlist: ', playlistsResponse); // checks the structure here
+            //console.log('playlist 1 name:', playlistsResponse[0].name); // checks the name of the first playlist
+            // console.log('playlist 1 image: ', playlistsResponse[0].images[0].url); // checks the image for the first playlist
 
         } catch (error) {
             console.error('Error fetching weather data:', error);
         }
     };
-
-    // const sendZipToDb = async (zip) => {
-    //     console.log('zip: ', zip);
-    //     try {
-    //         const response = await fetch(`/api/new-location`, {
-    //             method: 'POST',
-    //             mode: 'no-cors',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: `{"zipcode": ${zip}}`
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-
-    //         const responseZTD = await response.json();
-
-    //         // console.log('zipcode to db response: ', responseZTD)
-
-    //         return responseZTD;         
-
-    //     } catch (error) {
-    //         console.error('Error adding zip to database:', error);
-    //         return Promise.reject('Could not create new zipcode');
-    //     }
-    // };
 
     const getRecentLocations = async () => {
         try {
@@ -91,14 +62,10 @@ const HomePage = () => {
 
             setRecentLocations(locationsResponse.data);
 
-            // // these work
-            console.log(locationsResponse);
-            console.log(locationsResponse.data);
-            // console.log(locationsResponse.data[0].zipcode);
-
-            // // these do not work
-            // console.log(recentLocations);
-            // console.log(recentLocations[0].zipcode);
+            // check the structure of information coming back
+            // console.log('locationsResponse: ', locationsResponse);
+            // console.log('locationsResponse.data: ',locationsResponse.data);
+            // console.log('locationsResponse.data[0].zipcode: ',locationsResponse.data[0].zipcode);
 
         } catch (error) {
             console.error('Error fetching weather data:', error);
@@ -106,16 +73,8 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        // code that we want to run
-        // console.log('search input is: ', searchInput);
-        // searchInput === '' ? () => { } :
         getRecentLocations();
-
-        // optional return function
-        // return () => {
-        //     console.log('I clean up');
-        // };
-    },[]) // dependency array
+    }, [])
 
     return (
         <>
@@ -146,7 +105,6 @@ const HomePage = () => {
                             setConditionsResponse('');
                             setConditionsIconUrl('');
                             setPlaylistsResponse([]);
-                            // some function like clearSearchHistory that would call a delete route that would need to be created and clear out database
                         }
                         }
                     >
@@ -162,9 +120,9 @@ const HomePage = () => {
                             key={location.id}
                             RecentLocation={location.zipcode}
                         />
-                        console.log('location: ', location);
-                        console.log('location.id: ', location.id);
-                        console.log('location.zipcode: ', location.zipcode);
+                        // console.log('location: ', location);
+                        // console.log('location.id: ', location.id);
+                        // console.log('location.zipcode: ', location.zipcode);
                     }
                     ) : (
                         <div>

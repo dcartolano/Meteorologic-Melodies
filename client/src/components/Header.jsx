@@ -1,4 +1,3 @@
-
 function Header() {
     return (
         // Header title on page

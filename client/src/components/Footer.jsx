@@ -1,4 +1,3 @@
-
 function Footer() {
     return (
         <footer className="">
@@ -10,5 +9,3 @@ function Footer() {
 }
 
 export default Footer;
-
-// Meteorological Melodies
