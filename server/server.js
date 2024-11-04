@@ -52,6 +52,18 @@ app.get('/api/external', async (req, res) => {
     // // log to test that we are grabbing the conditions from the big weather object correctly
     // console.log('conditionsData: ', conditionsData);
 
+    // writes new zipcode to database
+    const sql = `INSERT INTO locations (zipcode)
+    VALUES ($1)`;
+    const params = [req.query.zip];
+
+    pool.query(sql, params, (err, result) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+    });
+
     // // defines token so that it can be used later
     let token = '';
 
